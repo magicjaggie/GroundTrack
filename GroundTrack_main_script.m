@@ -1,21 +1,26 @@
 clc;
 clear;
 
-% Nb of revolutions
-N = 3.65;
+% Nb of satellite's revolutions
+N = 15; %k
+
+% Nb of Earth revolution
+m = 4;
 
 % Input parameters
-a = 8350;
-e = 0.19760;
-i = 60;
-Omega = 270; % deg
-omega = 45; % deg
-f_0 = 230; % deg - theta
-omega_E = 15.04; % deg/h - Rotation of the Earth
+a = 17494;
+e = 0.5957;
+i = deg2rad(52.6737);
+Omega = deg2rad(270); % rad
+omega = deg2rad(45); % rad
+f_0 = deg2rad(230); % rad - theta
 mu = 398600.44; % orbital period of the satellite
+perigee_heigth = 701.814; %[km]
+rp = astroConstants(23)+perigee_heigth; %[km]
 
-% deg/s
-omega_E = omega_E / 3600;
+% Rotation of the Earth
+omega_E = 15.04; % deg/h
+omega_E = omega_E / 3600; % deg/s
 
 % Getting the cartesian coordinates
 [r,v] = kep2car(a, e, i, Omega, omega, f_0, mu);

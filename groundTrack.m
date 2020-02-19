@@ -12,7 +12,7 @@ lat = zeros(L*floor(N),1);
 
 deltaLambda = Tperiod * omega_E; 
 
-for k = 0:floor(N)
+for k = 0:floor(N)-1
     for i = 1:L
       r(i) = sqrt(Y(i,1)^2 + Y(i,2)^2 + Y(i,3)^2);
       n = Y(i,3)/r(i); %rad
@@ -28,7 +28,8 @@ for k = 0:floor(N)
     end
     [~,imini] = min(Lon(1+k*L : L+k*L));
     lon_k = [Lon(imini+1 +k*L : L +k*L) ; Lon(1 +k*L : imini +k*L)];
-    lon(1 +k*L : L +k*L) = lon_k;
+    Q = floor(abs(Lon(1 +k*L)/360));
+    lon(1 +k*L : L +k*L) = lon_k - sign(Lon(1 +k*L))*Q*360;
     lat_k = [delta(imini+1 +k*L : L +k*L)*180/pi() ; delta(1 +k*L : imini +k*L)*180/pi()];
     lat(1 +k*L : L +k*L) = lat_k;
     
@@ -38,6 +39,9 @@ for k = 0:floor(N)
         j=1;
         while lon(j +k*L)<-180
             j = j+1;
+            if j==L
+                break
+            end
         end
         lon(1 +k*L : L +k*L) = [lon(j +k*L : L+k*L) ; lon(1 +k*L : j-1 +k*L)+360];
         lat(1 +k*L : L +k*L) = [lat(j +k*L : L+k*L) ; lat(1 +k*L : j-1 +k*L)];
@@ -46,6 +50,9 @@ for k = 0:floor(N)
         j=1;
         while lon(j +k*L)>-180
             j = j+1;
+            if j==length(lon(1:L +k*L))
+                break
+            end
         end
         lon(1 +k*L : L +k*L) = [lon(j +k*L : L+k*L)+360 ; lon(1 +k*L : j-1 +k*L)];
         lat(1 +k*L : L +k*L) = [lat(j +k*L : L+k*L) ; lat(1 +k*L : j-1 +k*L)];
@@ -54,6 +61,9 @@ for k = 0:floor(N)
         j=1;
         while lon(j +k*L)>180
             j = j+1;
+            if j==length(lon(1:L +k*L))
+                break
+            end
         end
         lon(1 +k*L : L +k*L) = [lon(j +k*L : L+k*L) ; lon(1 +k*L : j-1 +k*L)-360];
         lat(1 +k*L : L +k*L) = [lat(j +k*L : L+k*L) ; lat(1 +k*L : j-1 +k*L)];
@@ -62,10 +72,12 @@ for k = 0:floor(N)
         j = 1;
         while lon(j +k*L)<180
             j = j+1;
+            if j==length(lon(1:L +k*L))
+                break
+            end
         end
         lon(1 +k*L : L +k*L) = [lon(j +k*L : L+k*L)-360 ; lon(1 +k*L : j-1 +k*L)];
         lat(1 +k*L : L +k*L) = [lat(j +k*L : L+k*L) ; lat(1 +k*L : j-1 +k*L)];
     end
-
 end
 
