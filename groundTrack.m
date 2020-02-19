@@ -27,10 +27,10 @@ for k = 0:floor(N)-1
       Lon(i + k*L) = alpha(i)/pi()*180 + lambda0 - k*deltaLambda ; %- k*2*pi() %longitude = lambda   %lambda0 = lon of Greenwhich meridian
     end
     [~,imini] = min(Lon(1+k*L : L+k*L));
-    lon_k = [Lon(imini+1 +k*L : L +k*L) ; Lon(1 +k*L : imini +k*L)];
+    lon_k = [Lon(imini +k*L : L +k*L) ; Lon(1 +k*L : imini-1 +k*L)];
     Q = floor(abs(Lon(1 +k*L)/360));
     lon(1 +k*L : L +k*L) = lon_k - sign(Lon(1 +k*L))*Q*360;
-    lat_k = [delta(imini+1 +k*L : L +k*L)*180/pi() ; delta(1 +k*L : imini +k*L)*180/pi()];
+    lat_k = [delta(imini +k*L : L +k*L)*180/pi() ; delta(1 +k*L : imini-1 +k*L)*180/pi()];
     lat(1 +k*L : L +k*L) = lat_k;
     
     

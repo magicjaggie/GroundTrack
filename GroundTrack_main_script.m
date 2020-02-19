@@ -61,7 +61,7 @@ lat = flip(lat);
 
 figure(1)
 
-image_file = '/Users/morgane/Desktop/Laboratories Orb Mech/GroundTrack/Earth.jpg';
+image_file = '/Users/morgane/Desktop/Laboratories Orb Mech/GroundTrack/Earthplanisphere.png';
 % img = imread(image_file);
 % image('CData', img, 'XData', [-180 180], 'YData', [-90 90]);
 % %imshow(img)
